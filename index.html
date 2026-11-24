@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>Бизнес-план к Рамадану</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ====== НАСТРОЙКА ВНЕШНЕГО ВИДА ====== */
+:root{
+  --bg:#FAF5ED; --card:#FFFFFF; --ink:#34241E; --muted:#7A675D;
+  --accent:#B0242C; --accent-soft:#F6E3E1; --line:#EADFD3; --ok:#2F6B4F;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Open Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.45;min-height:100vh}
+.wrap{max-width:520px;margin:0 auto;padding:20px 18px 120px}
+h1,h2{font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;line-height:1.1}
+h1{font-size:34px;margin:8px 0 10px}
+h2{font-size:26px;margin-bottom:6px}
+.kicker{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.lead{color:var(--muted);margin-bottom:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;margin-bottom:14px;box-shadow:0 6px 20px rgba(60,30,20,.05)}
+.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:18px}
+.progress i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.step{display:none}.step.on{display:block;animation:fade .25s}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+.q-hint{color:var(--muted);font-size:14px;margin-bottom:14px}
+.opt{display:block;width:100%;text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px;font:inherit;color:var(--ink);cursor:pointer}
+.opt b{display:block;font-weight:600}.opt small{color:var(--muted);font-size:13px}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+input[type=text],input[type=tel],input[type=number]{width:100%;font:inherit;font-size:18px;padding:14px 16px;border:1.5px solid var(--line);border-radius:14px;background:#fff;color:var(--ink);margin-bottom:10px}
+input:focus{outline:none;border-color:var(--accent)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.chip{border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:8px 14px;font:inherit;font-size:14px;color:var(--ink);cursor:pointer}
+.chip.sel{border-color:var(--accent);background:var(--accent-soft)}
+.btn{display:block;width:100%;border:0;border-radius:16px;padding:16px;font:inherit;font-weight:700;font-size:17px;background:var(--accent);color:#fff;cursor:pointer;margin-top:8px}
+.btn.ghost{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
+.btn:disabled{opacity:.4}
+.back{background:none;border:0;color:var(--muted);font:inherit;font-size:14px;margin-top:12px;cursor:pointer}
+.big{font-family:'Cormorant Garamond',Georgia,serif;font-size:44px;font-weight:700;color:var(--accent);line-height:1}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.stat{background:var(--bg);border-radius:14px;padding:12px}
+.stat span{display:block;font-size:12px;color:var(--muted)}
+.stat b{font-size:20px}
+.row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px dashed var(--line);font-size:15px}
+.row:last-child{border:0}.row b{font-weight:700}
+.tl{position:relative;padding-left:22px}
+.tl div{position:relative;padding:0 0 14px}
+.tl div:before{content:"";position:absolute;left:-17px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--accent)}
+.tl div:after{content:"";position:absolute;left:-13px;top:18px;width:2px;bottom:0;background:var(--line)}
+.tl div:last-child:after{display:none}
+.tl b{display:block}.tl small{color:var(--muted)}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+.warn{background:#FFF6E5;border-radius:14px;padding:12px 14px;font-size:14px;margin-top:12px}
+.check li{list-style:none;padding:5px 0 5px 26px;position:relative}
+.check li:before{content:"✓";position:absolute;left:0;color:var(--ok);font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="progress"><i id="bar"></i></div>
+
+  <!-- 0. Приветствие -->
+  <section class="step on" data-step="0">
+    <div class="kicker">Бизнес с Турцией · Иман</div>
+    <h1>Мой бизнес-план к&nbsp;Рамадану</h1>
+    <p class="lead">Ответьте на 7 вопросов, и мы посчитаем по ценам наших поставщиков: сколько вещей вы сможете закупить, за сколько их продавать и сколько можно заработать к празднику.</p>
+    <div class="card">
+      <ul class="check">
+        <li>2–3 минуты</li>
+        <li>Расчёт под ваш бюджет и ваше время</li>
+        <li>Календарь до праздника по неделям</li>
+      </ul>
+    </div>
+    <button class="btn" onclick="next()">Начать</button>
+  </section>
+
+  <!-- 1. Опыт -->
+  <section class="step" data-step="1">
+    <div class="kicker">Вопрос 1 из 7</div>
+    <h2>У вас уже был опыт продаж?</h2>
+    <p class="q-hint">Выберите один вариант</p>
+    <div data-key="experience" class="single">
+      <button class="opt" data-v="none"><b>Нет, ни разу не продавала</b></button>
+      <button class="opt" data-v="friends"><b>Продаю понемногу знакомым</b></button>
+      <button class="opt" data-v="shop"><b>У меня есть свой магазин</b></button>
+    </div>
+    <button class="back" onclick="prev()">← Назад</button>
+  </section>
+
+  <!-- 2. Бюджет -->
+  <section class="step" data-step="2">
+    <div class="kicker">Вопрос 2 из 7</div>
+    <h2>Какую сумму готовы вложить в первую закупку?</h2>
+    <p class="q-hint">Вместе с доставкой. Можно выбрать или вписать свою сумму</p>
+    <div class="chips" id="budgetChips">
+      <button class="chip" data-v="20000">20 000 ₽</button>
+      <button class="chip" data-v="35000">35 000 ₽</button>
+      <button class="chip" data-v="50000">50 000 ₽</button>
+      <button class="chip" data-v="80000">80 000 ₽</button>
+      <button class="chip" data-v="120000">120 000 ₽</button>
+    </div>
+    <input type="number" id="budget" inputmode="numeric" placeholder="Своя сумма, ₽">
+    <button class="btn" id="budgetNext" onclick="saveBudget()">Дальше</button>
+    <button class="back" onclick="prev()">← Назад</button>
+  </section>
+
+  <!-- 3. Время -->
+  <section class="step" data-step="3">
+    <div class="kicker">Вопрос 3 из 7</div>
+    <h2>Сколько времени в день вы можете уделять делу?</h2>
+    <p class="q-hint">Честно, с учётом детей и дома</p>
+    <div data-key="time" class="single">
+      <button class="opt" data-v="1"><b>До часа</b><small>Когда дети спят или вечером</small></button>
+      <button class="opt" data-v="2"><b>1–2 часа</b></button>
+      <button class="opt" data-v="3"><b>3 часа и больше</b></button>
+    </div>
+    <button class="back" onclick="prev()">← Назад</button>
+  </section>
+
+  <!-- 4. Площадки -->
+  <section class="step" data-step="4">
+    <div class="kicker">Вопрос 4 из 7</div>
+    <h2>Где будете продавать?</h2>
+    <p class="q-hint">Можно выбрать несколько</p>
+    <div class="chips" data-key="channels" id="channels">
+      <button class="chip" data-v="WhatsApp">Статусы WhatsApp</button>
+      <button class="chip" data-v="Instagram">Instagram</button>
+      <button class="chip" data-v="Telegram">Telegram</button>
+      <button class="chip" data-v="Знакомые">Знакомые и коллеги</button>
+      <button class="chip" data-v="Магазин">Свой магазин</button>
+    </div>
+    <button class="btn" onclick="saveChannels()">Дальше</button>
+    <button class="back" onclick="prev()">← Назад</button>
+  </section>
+
+  <!-- 5. Сегмент -->
+  <section class="step" data-step="5">
+    <div class="kicker">Вопрос 5 из 7</div>
+    <h2>Какой сегмент вам ближе?</h2>
+    <p class="q-hint">Можно поменять потом, на обучении поможем выбрать</p>
+    <div data-key="segment" class="single">
+      <button class="opt" data-v="budget"><b>Бюджетный</b><small>Двойки и комплекты на каждый день</small></button>
+      <button class="opt" data-v="middle"><b>Средний</b><small>Платья и костюмы хорошего качества</small></button>
+      <button class="opt" data-v="premium"><b>Премиум</b><small>Нарядные комплекты к празднику</small></button>
+    </div>
+    <button class="back" onclick="prev()">← Назад</button>
+  </section>
+
+  <!-- 6. Цель -->
+  <section class="step" data-step="6">
+    <div class="kicker">Вопрос 6 из 7</div>
+    <h2>Чего вы хотите от этого сезона?</h2>
+    <div data-key="goal" class="single">
+      <button class="opt" data-v="try"><b>Попробовать и вернуть вложенное</b><small>И одеть своих детей к празднику</small></button>
+      <button class="opt" data-v="income"><b>Дополнительный доход для семьи</b></button>
+      <button class="opt" data-v="business"><b>Начать своё дело надолго</b></button>
+    </div>
+    <button class="back" onclick="prev()">← Назад</button>
+  </section>
+
+  <!-- 7. Контакты -->
+  <section class="step" data-step="7">
+    <div class="kicker">Вопрос 7 из 7</div>
+    <h2>Куда прислать ваш план?</h2>
+    <p class="q-hint">Мы сохраним расчёт и напишем, когда откроется запись на обучение</p>
+    <input type="text" id="name" placeholder="Ваше имя">
+    <div class="chips" id="contactType">
+      <button class="chip" data-v="WhatsApp">WhatsApp</button>
+      <button class="chip" data-v="Telegram">Telegram</button>
+    </div>
+    <input type="text" id="contact" placeholder="Сначала выберите, где вам удобнее" disabled>
+    <button class="btn" onclick="finish()">Получить мой план</button>
+    <button class="back" onclick="prev()">← Назад</button>
+  </section>
+
+  <!-- 8. Результат -->
+  <section class="step" data-step="8" id="result"></section>
+
+</div>
+
+<script>
+/* ======================================================================
+   НАСТРОЙКИ. Меняйте только здесь.
+   Цены ниже ПРИМЕРНЫЕ (из обзора Иман 24.11.2026). Заменить на точные.
+   ====================================================================== */
+const CONFIG = {
+  segments: {
+    budget:  { name:'Бюджетный', cost: 450,  markup: 2.0 },  // средняя цена вещи у поставщика, ₽; во сколько раз цена продажи выше себестоимости
+    middle:  { name:'Средний',   cost: 550,  markup: 2.0 },
+    premium: { name:'Премиум',   cost: 1100, markup: 2.0 }
+  },
+  deliveryShare: 0.25,   // доставка карго: доля от суммы товара (500 $ товара → 125 $ доставки)
+  otherShare: 0.05,      // упаковка и прочие расходы: доля от суммы товара
+  salesDays: 32,         // дней продаж: от прихода товара (начало февраля) до праздника
+  dates: [
+    ['До 24 декабря', 'Решение и запись на обучение'],
+    ['27 декабря', 'Старт обучения: поставщики, оплата, карго, расчёт цены'],
+    ['11–24 января', 'Закупка вместе с куратором'],
+    ['Начало февраля', 'Товар приходит, начинаем показывать и продавать'],
+    ['≈ 8 февраля', 'Начало Рамадана, самый активный спрос'],
+    ['≈ 9–10 марта', 'Праздник']
+  ],
+  // Куда отправлять ответы (Google Apps Script). Пусто = никуда не отправлять.
+  sheetUrl: '',
+  // Ссылка для кнопки записи на обучение (WhatsApp Иман или бот)
+  ctaUrl: 'https://wa.me/70000000000?text=' + encodeURIComponent('Здравствуйте! Я составила бизнес-план к Рамадану и хочу на обучение со скидкой'),
+  ctaText: 'Хочу на обучение со скидкой'
+};
+/* ====================================================================== */
+
+const tg = window.Telegram && window.Telegram.WebApp;
+if (tg) { tg.ready(); tg.expand(); try{ tg.setHeaderColor('#FAF5ED'); tg.setBackgroundColor('#FAF5ED'); }catch(e){} }
+const tgUser = tg && tg.initDataUnsafe && tg.initDataUnsafe.user || null;
+
+const A = { channels: [] };
+let step = 0;
+const TOTAL = 8;
+const steps = [...document.querySelectorAll('.step')];
+
+function show(n){
+  steps.forEach(s => s.classList.toggle('on', +s.dataset.step === n));
+  step = n;
+  document.getElementById('bar').style.width = Math.min(100, n / TOTAL * 100) + '%';
+  window.scrollTo(0,0);
+  if (tg) tg.HapticFeedback && tg.HapticFeedback.selectionChanged();
+}
+function next(){ show(step + 1); }
+function prev(){ show(Math.max(0, step - 1)); }
+
+// одиночный выбор: клик сразу ведёт дальше
+document.querySelectorAll('.single').forEach(g => {
+  g.querySelectorAll('.opt').forEach(b => b.addEventListener('click', () => {
+    g.querySelectorAll('.opt').forEach(x => x.classList.remove('sel'));
+    b.classList.add('sel');
+    A[g.dataset.key] = b.dataset.v;
+    setTimeout(next, 180);
+  }));
+});
+
+// бюджет
+const budgetInput = document.getElementById('budget');
+document.querySelectorAll('#budgetChips .chip').forEach(c => c.addEventListener('click', () => {
+  document.querySelectorAll('#budgetChips .chip').forEach(x => x.classList.remove('sel'));
+  c.classList.add('sel'); budgetInput.value = c.dataset.v;
+}));
+budgetInput.addEventListener('input', () => document.querySelectorAll('#budgetChips .chip').forEach(x => x.classList.remove('sel')));
+function saveBudget(){
+  const v = parseInt(budgetInput.value, 10);
+  if (!v || v < 5000) { alertMsg('Укажите сумму от 5 000 ₽'); return; }
+  A.budget = v; next();
+}
+
+// площадки
+document.querySelectorAll('#channels .chip').forEach(c => c.addEventListener('click', () => c.classList.toggle('sel')));
+function saveChannels(){
+  A.channels = [...document.querySelectorAll('#channels .chip.sel')].map(c => c.dataset.v);
+  if (!A.channels.length) { alertMsg('Выберите хотя бы одну площадку'); return; }
+  next();
+}
+
+// контакты
+if (tgUser) document.getElementById('name').value = [tgUser.first_name, tgUser.last_name].filter(Boolean).join(' ');
+const contactInput = document.getElementById('contact');
+document.querySelectorAll('#contactType .chip').forEach(c => c.addEventListener('click', () => {
+  document.querySelectorAll('#contactType .chip').forEach(x => x.classList.remove('sel'));
+  c.classList.add('sel'); A.contactType = c.dataset.v; contactInput.disabled = false;
+  if (A.contactType === 'WhatsApp') { contactInput.type = 'tel'; contactInput.inputMode = 'tel'; contactInput.placeholder = 'Номер WhatsApp, например +7 928 000-00-00'; contactInput.value = ''; }
+  else { contactInput.type = 'text'; contactInput.inputMode = 'text'; contactInput.placeholder = 'Ник в Telegram, например @hava'; contactInput.value = tgUser && tgUser.username ? '@' + tgUser.username : ''; }
+  contactInput.focus();
+}));
+
+function alertMsg(t){
+  if (tg && tg.showAlert && tg.initData) { tg.showAlert(t); return; }
+  let el = document.getElementById('toast');
+  if (!el) { el = document.createElement('div'); el.id = 'toast'; el.style.cssText = 'position:fixed;left:16px;right:16px;bottom:24px;background:#34241E;color:#fff;padding:14px 16px;border-radius:14px;font-size:15px;text-align:center;z-index:9;transition:opacity .3s'; document.body.appendChild(el); }
+  el.textContent = t; el.style.opacity = 1; clearTimeout(el._t); el._t = setTimeout(() => el.style.opacity = 0, 2600);
+}
+const rub = n => Math.round(n).toLocaleString('ru-RU') + ' ₽';
+const round50 = n => Math.round(n / 50) * 50;
+
+function calc(){
+  const s = CONFIG.segments[A.segment];
+  const unitCost = s.cost * (1 + CONFIG.deliveryShare + CONFIG.otherShare); // себестоимость вещи
+  const items = Math.max(1, Math.floor(A.budget / unitCost));
+  const spent = items * unitCost;
+  const price = round50(unitCost * s.markup);
+  const revenueAll = items * price;
+  const profitAll = revenueAll - spent;
+  const profitHalf = items / 2 * price - spent;
+  const breakeven = Math.ceil(spent / price);
+  const perDay = items / CONFIG.salesDays;
+  return { s, unitCost, items, spent, price, revenueAll, profitAll, profitHalf, breakeven, perDay };
+}
+
+function perDayText(x){
+  if (x < 1) { const d = Math.round(1 / x); return 'примерно 1 вещь раз в ' + d + ' ' + (d<5?'дня':'дней'); }
+  const lo = Math.floor(x), hi = Math.ceil(x);
+  return lo === hi ? lo + ' в день' : lo + '–' + hi + ' в день';
+}
+
+function finish(){
+  A.name = document.getElementById('name').value.trim();
+  A.contact = contactInput.value.trim();
+  if (!A.name) { alertMsg('Напишите, как к вам обращаться'); return; }
+  if (!A.contactType) { alertMsg('Выберите, куда вам удобнее написать: WhatsApp или Telegram'); return; }
+  if (A.contactType === 'WhatsApp' && A.contact.replace(/\D/g,'').length < 10) { alertMsg('Проверьте номер WhatsApp'); return; }
+  if (A.contactType === 'Telegram' && A.contact.replace('@','').length < 3) { alertMsg('Напишите ваш ник в Telegram'); return; }
+  const r = calc();
+  render(r);
+  send(r);
+  show(8);
+}
+
+function render(r){
+  const timeWarn = (A.time === '1' && r.perDay > 3)
+    ? '<div class="warn">Для вашего бюджета нужно продавать больше 3 вещей в день, а времени у вас до часа. На обучении разберём, как совместить: например, начать с меньшей закупки или сразу работать через статусы и знакомых.</div>' : '';
+  const goalLine = {
+    try: 'Ваша первая цель: вернуть вложенное. Для этого достаточно продать <b>' + r.breakeven + ' из ' + r.items + '</b> вещей, остальное уже ваш заработок, а часть можно оставить своим детям к празднику.',
+    income: 'Если продать половину партии, вы уже ' + (r.profitHalf >= 0 ? 'в плюсе на <b>' + rub(r.profitHalf) + '</b>' : 'почти вернёте вложенное') + ', а остальное продаётся после праздника.',
+    business: 'С выручки этого сезона можно сделать вторую закупку уже к лету и расширить ассортимент.'
+  }[A.goal];
+
+  document.getElementById('result').innerHTML = `
+    <div class="kicker">${A.name ? A.name + ', ваш' : 'Ваш'} бизнес-план к Рамадану</div>
+    <h1>Если продать всю партию</h1>
+    <div class="card">
+      <span class="note" style="margin:0">можно заработать</span>
+      <div class="big">${rub(r.profitAll)}</div>
+      <div class="grid">
+        <div class="stat"><span>Вещей в закупке</span><b>${r.items}</b></div>
+        <div class="stat"><span>Цена продажи</span><b>${rub(r.price)}</b></div>
+        <div class="stat"><span>Продаж в день</span><b>${perDayText(r.perDay)}</b></div>
+        <div class="stat"><span>Чтобы вернуть вложенное</span><b>${r.breakeven} вещей</b></div>
+      </div>
+      ${timeWarn}
+    </div>
+
+    <div class="card">
+      <h2>Расчёт</h2>
+      <div class="row"><span>Сегмент</span><b>${r.s.name}</b></div>
+      <div class="row"><span>Бюджет</span><b>${rub(A.budget)}</b></div>
+      <div class="row"><span>Вещь у поставщика, в среднем</span><b>${rub(r.s.cost)}</b></div>
+      <div class="row"><span>С доставкой и упаковкой</span><b>${rub(r.unitCost)}</b></div>
+      <div class="row"><span>Вложите в партию</span><b>${rub(r.spent)}</b></div>
+      <div class="row"><span>Выручка, если продать всё</span><b>${rub(r.revenueAll)}</b></div>
+      <p class="note">${goalLine}</p>
+    </div>
+
+    <div class="card">
+      <h2>Ваш календарь</h2>
+      <div class="tl">${CONFIG.dates.map(d => `<div><b>${d[0]}</b><small>${d[1]}</small></div>`).join('')}</div>
+    </div>
+
+    <div class="card">
+      <h2>Что нужно, чтобы план стал закупкой</h2>
+      <ul class="check">
+        <li>Контакты проверенных производителей и поставщиков из Турции</li>
+        <li>Оплата без посредников и проверенное карго</li>
+        <li>Куратор, который поможет оформить первый заказ</li>
+        <li>Расчёт цены по методике Иман</li>
+        <li>Продажи через WhatsApp и свою AI-команду, которая подскажет, что и когда показать</li>
+      </ul>
+      <p class="note">Всё это внутри обучения. Старт 27 декабря.</p>
+      <button class="btn" onclick="cta()">${CONFIG.ctaText}</button>
+    </div>
+
+    <p class="note">Это расчёт, а не обещание дохода. Цены у поставщиков и стоимость доставки ориентировочные на ноябрь 2026 года и могут меняться. Результат зависит от выбранного товара и от того, сколько вы будете показывать и предлагать.</p>
+    <button class="btn ghost" onclick="restart()">Посчитать заново</button>
+  `;
+}
+
+function cta(){
+  if (tg && tg.openLink && tg.initData) tg.openLink(CONFIG.ctaUrl); else { const a = document.createElement('a'); a.href = CONFIG.ctaUrl; a.target = '_blank'; a.rel = 'noopener'; document.body.appendChild(a); a.click(); a.remove(); }
+}
+function restart(){ document.querySelectorAll('.sel').forEach(x => x.classList.remove('sel')); show(1); }
+
+function send(r){
+  if (!CONFIG.sheetUrl) return;
+  const payload = {
+    date: new Date().toISOString(),
+    name: A.name, contact_type: A.contactType, contact: A.contact,
+    tg_id: tgUser ? tgUser.id : '', tg_username: tgUser ? (tgUser.username || '') : '',
+    experience: A.experience, budget: A.budget, time: A.time,
+    channels: A.channels.join(', '), segment: A.segment, goal: A.goal,
+    items: r.items, price: r.price, profit_all: Math.round(r.profitAll), breakeven: r.breakeven
+  };
+  fetch(CONFIG.sheetUrl, { method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain'}, body: JSON.stringify(payload) }).catch(()=>{});
+}
+</script>
+</body>
+</html>
